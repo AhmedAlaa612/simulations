@@ -21,6 +21,6 @@ This Python script simulates a system with two servers. It performs the followin
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](/LICENSE) file for details.
 
 by Ahmed Alaaeldin Ismail
