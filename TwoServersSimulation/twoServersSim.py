@@ -7,6 +7,7 @@ import seaborn as sns
 IAT_table = [(1, 0, 24), (2, 25, 64), (3, 65, 84), (4, 85, 100)]
 AbleST_table = [(2, 0, 29), (3, 30, 57), (4, 58, 82), (5, 83, 100)]
 BakerST_table = [(2, 0, 34), (3, 35, 59), (4, 60, 79), (5, 80, 100)]
+N = 100
 # AbleST_table = [(3, 0, 34), (4, 35, 59), (5, 60, 79), (6, 80, 100)]
 # BakerST_table = [(2, 0, 29), (3, 30, 57), (4, 58, 82), (5, 83, 100)]
 table = []
@@ -47,8 +48,8 @@ AbleIdleTime: if AbleTurn then AbleSTends[i-1]-AbleSTbegins[i] else NULL
 BakerIdleTime: if BakerTurn then BakerSTends[i-1]-BakerSTbegins[i] else NULL
 """
 # generate a list of random numbers
-RN_IAT = [random.randint(0, 100) for i in range(100)]
-RN_ST = [random.randint(0, 100) for i in range(100)]
+RN_IAT = [random.randint(0, 100) for i in range(N)]
+RN_ST = [random.randint(0, 100) for i in range(N)]
 # RN_IAT = [0, 26, 98, 90, 26,42, 74, 80, 68, 22, 48, 34, 45, 24, 34, 63, 38, 80, 42, 56, 89, 18, 51, 71, 16, 92]
 # RN_ST = [95, 21, 51, 92, 89, 38, 13, 61, 50, 49, 39, 53, 88, 1, 81, 53, 81, 64, 1, 67, 1, 47, 75, 57, 87, 47]
 
@@ -150,18 +151,21 @@ print("\n\npercentage able was busy: {:.2%}".format(ptc_able_busy))
 avg_waiting_time = sum([row["QueuingTime"] for row in table]) / sum([row["QueuingTime"] != 0 for row in table])
 print("\n\naverage waiting time: {:.2f} minutes".format(avg_waiting_time))
 #histogram to show callers delay
-# waiting_time = [row["QueuingTime"] for row in table if row["QueuingTime"] != 0]
+waiting_time = [row["QueuingTime"] for row in table if row["QueuingTime"] != 0]
+sns.histplot(data=waiting_time, discrete=True)
+plt.xticks(range(0, max(waiting_time)+1))
+plt.show()
 # max_waiting_time = max(waiting_time)
 # plt.hist(waiting_time, edgecolor = 'black')
 # plt.xticks(range(1,max_waiting_time+1))
 # plt.show()
 # count plot to show callers delay
-waiting_time_df = pd.DataFrame([row["QueuingTime"] for row in table if row["QueuingTime"] != 0])
-# type_count = waiting_time_df[0].value_counts()
-# order = type_count.index
-sns.countplot(x=0, data=waiting_time_df)
-# # for i in range(1, type_count.shape[0]+1):
-# #     cnt = type_count[i]
-# #     pct_text = '{:0.1f}%'.format(100*cnt/waiting_time_df.shape[0])
-# #     plt.text(cnt+1, i-1, pct_text, va='center')
-plt.show()
+# waiting_time_df = pd.DataFrame([row["QueuingTime"] for row in table if row["QueuingTime"] != 0])
+# # type_count = waiting_time_df[0].value_counts()
+# # order = type_count.index
+# sns.countplot(x=0, data=waiting_time_df)
+# # # for i in range(1, type_count.shape[0]+1):
+# # #     cnt = type_count[i]
+# # #     pct_text = '{:0.1f}%'.format(100*cnt/waiting_time_df.shape[0])
+# # #     plt.text(cnt+1, i-1, pct_text, va='center')
+# plt.show()
