@@ -4,8 +4,8 @@ This Python script simulates a system with two servers. It performs the followin
 
 1. Generates a detailed table using PrettyTable to display simulation results.
 2. Exports the table to an Excel file using Pandas.
-3. Calculates the percentage of time each server was busy and the average waiting time.
-4. Displays a countplot showing the delay in service using Seaborn.
+3. Calculate the percentage of time each server was busy and the average waiting time.
+4. Displays a histogram showing the delay in service using Seaborn.
 
 ## How to Use
 
@@ -14,7 +14,7 @@ This Python script simulates a system with two servers. It performs the followin
    - Add the service time probabilities for the servers.
 
 2. **Adjust Call Numbers:**
-   - You can control the number of calls by specifying the number of random numbers generated (default is 100).
+   - set the number of calls in N (default is 100).
 
 3. **Run the Application:**
    - Execute the Python script in your preferred environment.
