@@ -95,7 +95,7 @@ for i, (RN_IAT, RN_ST) in enumerate(zip(RN_IAT, RN_ST)):
         Able_turn = True
         Baker_turn = False
         AbleSTbegins = clock
-        AbleIdleTime = clock - AbleSTEnds if AbleSTEnds else 0
+        AbleIdleTime = clock - AbleSTEnds if AbleSTEnds else clock
         AbleST = CalcAbleST(RN_ST)
         AbleSTEnds = AbleSTbegins + AbleST
         QueuingTime = 0
@@ -103,11 +103,10 @@ for i, (RN_IAT, RN_ST) in enumerate(zip(RN_IAT, RN_ST)):
         Baker_turn = True
         Able_turn = False
         BakerSTbegins = clock
-        BakerIdleTime = clock - BakerSTEnds if BakerSTEnds else 0
+        BakerIdleTime = clock - BakerSTEnds if BakerSTEnds else clock
         BakerST = CalcBakerST(RN_ST)
         BakerSTEnds = BakerSTbegins + BakerST
         QueuingTime = 0
-    TimeInSystem = QueuingTime + AbleST if Able_turn else BakerST
     call = {
         "call ID": id,
         "RN_IAT": RN_IAT,
@@ -121,7 +120,7 @@ for i, (RN_IAT, RN_ST) in enumerate(zip(RN_IAT, RN_ST)):
         "BakerST": BakerST if Baker_turn else "",
         "BakerSTEnds": BakerSTEnds if Baker_turn else "",
         "QueuingTime": QueuingTime,
-        "TimeInSystem": TimeInSystem,
+        "TimeInSystem": QueuingTime + (AbleST if Able_turn else BakerST),
         "AbleIdleTime": AbleIdleTime if Able_turn else "",
         "BakerIdleTime": BakerIdleTime if Baker_turn else ""
     }
@@ -155,17 +154,3 @@ waiting_time = [row["QueuingTime"] for row in table if row["QueuingTime"] != 0]
 sns.histplot(data=waiting_time, discrete=True)
 plt.xticks(range(0, max(waiting_time)+1))
 plt.show()
-# max_waiting_time = max(waiting_time)
-# plt.hist(waiting_time, edgecolor = 'black')
-# plt.xticks(range(1,max_waiting_time+1))
-# plt.show()
-# count plot to show callers delay
-# waiting_time_df = pd.DataFrame([row["QueuingTime"] for row in table if row["QueuingTime"] != 0])
-# # type_count = waiting_time_df[0].value_counts()
-# # order = type_count.index
-# sns.countplot(x=0, data=waiting_time_df)
-# # # for i in range(1, type_count.shape[0]+1):
-# # #     cnt = type_count[i]
-# # #     pct_text = '{:0.1f}%'.format(100*cnt/waiting_time_df.shape[0])
-# # #     plt.text(cnt+1, i-1, pct_text, va='center')
-# plt.show()
